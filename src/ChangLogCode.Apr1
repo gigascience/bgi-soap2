@@ -1,0 +1,64 @@
+--- ../soap2.15/BWTAln.c	2009-03-27 10:42:36.000000000 +0800
++++ BWTAln.c	2009-04-01 10:25:41.000000000 +0800
+@@ -163,6 +163,8 @@
+ 		unsigned char ec;
+ 		unsigned int i;
+ 		int k;
++		const int coord = (info>>24&1)?(bo->seqLen-bo->alnLen):0;
++
+ 		for (i=0;(i<len && pl<=pr);i++) {
+ 			//call once only proceduressssss - great
+ 			BWTAllOccValue(rev_bwt,rev_pl,occcount_pstart);
+@@ -179,7 +181,7 @@
+ 				if (querypattern[start+i]==ec)
+ 					continue;
+ 				info &= 0xffff000;
+-				info |= ((ec&3)<<8|((start+i)&0xff))&0xfff;
++				info |= ((ec&3)<<8|((start+i+coord)&0xff))&0xfff;
+ 				mk_l=pl;
+ 				mk_r=pr;
+ 				rev_mk_l=rev_pl;
+@@ -390,6 +392,7 @@
+ 	unsigned long long ALLONE = (1<<(lookupTable.tableSize*2))-1;
+ 	unsigned char c;
+ 	int hitcount = 0;
++	const int coord = (info>>24&1)?(bo->seqLen-bo->alnLen):0;
+ //	fprintf(stdout, "BWT2misMatching\n");
+ 	//Separate into 4 cases according to the documentation.
+ 	//==============================================
+@@ -426,7 +429,7 @@
+ 			unsigned int mk_l=l;
+ 			unsigned int mk_r=r;
+ 			info &= 0x7000000;
+-			info |= ((((ec&0x3)<<8)|(i&0xff))&0x3ff)<<12;
++			info |= ((((ec&0x3)<<8)|((i+coord)&0xff))&0x3ff)<<12;
+ 			mk_l = bwt->cumulativeFreq[ec] + occCount_pstart[ec] + 1;
+ 			mk_r = bwt->cumulativeFreq[ec] + occCount_pend[ec];
+ 
+@@ -523,7 +526,7 @@
+ 			if (convertedKey[i]==ec) continue;
+ //			fprintf(stdout, "%d\n", i);
+ 			info &= 0x7000000;
+-			info |= ((((ec&0x3)<<8)|(i&0xff))&0x3ff)<<12;
++			info |= ((((ec&0x3)<<8)|((i+coord)&0xff))&0x3ff)<<12;
+ 			unsigned int mk_l=l;
+ 			unsigned int mk_r=r;
+ 			unsigned int rev_mk_l=rev_l;
+@@ -596,7 +599,7 @@
+ 		for (ec=0;ec<4;ec++) {
+ 			if (ec == (convertedKey[i] & 0x3)) continue;
+ 			info &= 0x7000000;
+-			info |= ((((ec&0x3)<<8)|(i&0xff))&0x3ff)<<12;
++			info |= ((((ec&0x3)<<8)|((i+coord)&0xff))&0x3ff)<<12;
+ 			unsigned long long err_packedPattern = packedPattern;
+ 			unsigned long long err_rev_packedPattern = rev_packedPattern;
+ 
+@@ -681,7 +684,7 @@
+ 		for (ec=0;ec<4;ec++) {
+ 			if ((convertedKey[i]&0x3) ==ec) continue;
+ 			info &= 0x7000000;
+-			info |= ((((ec&0x3)<<8)|(i&0xff))&0x3ff)<<12;
++			info |= ((((ec&0x3)<<8)|((i+coord)&0xff))&0x3ff)<<12;
+ 			unsigned int mk_l=l;
+ 			unsigned int mk_r=r;
+ 			unsigned int rev_mk_l=rev_l;

@@ -1,0 +1,15 @@
+System Requirements
+===================
+
+To complie SOAP2 requires Intel x86_64 CPU, and gcc version 4.2.3 or above.
+
+
+Compilation
+===========
+
+Type `make' to compile SOAP2.
+
+
+Installation
+============
+

@@ -1,0 +1,115 @@
+.TH SOAP.coverage 1 "20 Aug 2009" SOAP.coverage-2.7.7 "Bioinformatics tool"
+.SH NAME
+.PP
+SOAP.coverage \- Short Oligonucleotide Analysis Package - Multi functional coverage analyzer
+.SH SYNOPSIS
+.PP
+soap.coverage -cvg|-phy -il soap-results-list -o output [options]
+.SH DESCRIPTION
+.PP
+SOAP.coverage is a member of the SOAP (Short Oligonucleotide Analysis Package). This utility can calculate sequencing coverage or physical coverage as well as duplication rate and details of specific block for each segments and whole genome by using SOAP, BLAT, BLAST, BlastZ, mummer and MAQ aligement results with multi-thread. Gziped file supported.
+.PP
+SOAP.coverage is benefitted in time and space efficiency by a specific design in the basic data structures and algorithms used.
+.SH COMMAND AND OPTIONS
+.PP
+.B soap
+-D <in.fasta.index> -a <query.file.a> [-b <query.file.b>] -o <alignment.output> [-2 <unpaired.output>] [options]
+.P
+.B OPTIONS:
+.RS
+.TP
+.B -i STRs or -il STR
+Input result files or file list of SOAP, BLAT, BLAST, BlastZ, mummer or MAQ
+.TP
+.B -o STR
+Results output file
+.TP
+.B -refsingle STR
+Input reference file in FASTA format
+.TP
+.B -cvg or -phy
+Switch for sequencing coverage or physical coverage. At least one should be selected
+.TP
+.B -depthsingle STR or -depthsinglebin STR
+Output file with coverage of each bp in plain text or binary. See APPENDIX for detailed descrption for binary format.
+.TP
+.B -addn STR
+Mask specific areas provided in file. For input format please type "soap.coverage -h"
+.TP
+.B -plot STR INT INT
+Plot coverage distribution within certain range to a file
+.TP
+.B -cdsinput
+Calculate specific area's detailed information. For input format please type "soap.coverage -h"
+.TP
+.B -cdsdetail STR
+Should be used with cdsinput for output file path
+.TP
+.B -cdsplot STR INT INT
+Plot coverage distribution of specific areas within certain range to a file
+.TP
+.B -window STR INT
+Output coverage averaged in a [INT] long window to [STR]
+.TP
+.B -p
+Number of processor. Default = 4
+.TP
+.B -trim INT
+Exclude [INT] bp at head and tail of each segment
+.TP
+.B -pslsub or -pslquery or -m8subject or -m8query or -axtoitg or -axtoiq or -mummerquery of -maq
+File format switches.
+.TP
+.B -onlyuniq
+Use reads those are uniquely mapped (column 4 in soap == 1)
+.TP
+.B -precise
+Omit mismatched bp in soap result
+.TP
+.B -onlycover
+Output 0 for no cover and 1 for covered
+.TP
+.B -p INT
+Multithreads, n threads, [1]
+.SH APPENDIX
+.PP
+Provide correct reference and make sure right parameters are used, or you will get termination and tips.
+.RS
+.P
+.B NOTE:
+1. the reference input should only be FASTA format; 2. Depth output would be as large as 10 to 15 GB, use binary output if possible. The binary format is: 1*[ulong(x)]-x*{[ulong(len)]-[char[len](name)]-[ulong(len2)]-[ushort[len2](bp)]}. (ulong for unsigned long and ushort for unsigned short in C++)
+.RE
+.SH ENVIRONMENT
+.PP
+The datastructure is imcompatible with 32bit, so it can't be migrated on any 32bit platforms.
+The current version can only run on 
+.B x86_64 platform.
+We will provide a universal version for most of the 64bit platform later.
+.TP
+.B HARDWARE REQUIREMENT
+.RS
+1.6Gb RAM (for a genome as large as human's)
+.P
+2.at least 8Gb hard disk to store a refsingle output (for a genome as large as human's)
+.RE
+.TP
+.B SYSTEM REQUIREMENT
+.RS
+Linux x86_64
+.RE
+.SH SEE ALSO
+.PP
+Website for SOAP <http://soap.genomics.org.cn>,
+.P
+Google Group for SOAP <http://groups.google.com/group/bgi-soap>
+.PP
+.SH ATHOUR
+.PP
+.B BGI
+RuiBang Luo, Shenzhen SOAP team.
+.SH REPORT BUGS
+.PP
+Report bugs to <soap@genomics.org.cn>
+.SH ACKNOWLEDGEMENTS
+.PP
+Thanks for XiaoDong Fang's initial idea on writing a time and space efficient coverage analyzer as well as YingRui Li, HanCheng Zheng and Chang Yu's suggestions on improving this utility.

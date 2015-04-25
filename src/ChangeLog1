@@ -1,0 +1,16 @@
+May 21 2009
+1. SWRescue serier bug fixed
+
+------------------------------------------------------
+Apr 10 2009
+1. -l option compatible with diff read_length
+2. -s min_length after soft clip
+3. seq and quality real length is coordinated by soft clip
+4. MD contain no 0 except first
+
+------------------------------------------------------
+Apr 8 2009
+1. -t option
+2. -r segfault
+3. chang x, y
+
